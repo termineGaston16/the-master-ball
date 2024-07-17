@@ -20,7 +20,20 @@ function RouteNormalizer() {
 export default function App() {
     return (
         <BrowserRouter>
-            <Suspense fallback="Loading...">
+            <Suspense fallback={<span style={{
+                color: "withe",
+                fontSize: "1.3rem",
+                fontFamily: "Trebuchet MS",
+                fontWeight: "600",
+                fontStyle: "italic",
+                textShadow: "0px 0px 0.3rem white",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
+
+            }}>Cargando App</span>}>
+
                 <Header />
                 <RouteNormalizer />
                 <Routes>
@@ -31,6 +44,7 @@ export default function App() {
                     <Route exact path="/buscar-pokemon" element={<Home />} />
                     <Route exact path="/buscar-pokemon/:query" element={<Home />} />
                     <Route exact path="/filtrar-pokemon" element={<Home />} />
+                    <Route exact path="/filtrar-pokemon/:typePokemon" element={<Home />} />
 
                 </Routes>
             </Suspense>

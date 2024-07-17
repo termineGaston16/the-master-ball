@@ -90,9 +90,35 @@ export default function useApi() {
                     });
                 }
 
+                // OBTENER LOS TIPOS
+                if (tipoDeFetch === "type") {
+                    setTypes(json)
+                }
+
                 // FILTRAR POR ESPECIE
                 if (tipoDeFetch === "especie") {
-                    setTypes(json);
+                    setResults(prevResults => {
+                        // Crear un nuevo objeto para almacenar los resultados
+                        const newObject = { ...prevResults };
+
+                        // Filtrar los resultados que contienen el identificador en el URL
+                        const allPokemons = json.pokemon
+                        
+                        // Manejar la primera carga y las cargas subsiguientes
+                        if (prevResults && prevResults.results.length > 0) {
+
+                            // Añadir más resultados a los existentes
+                            newObject.results = [...prevResults.results, ...allPokemons.slice(pages.offset, pages.offset + pages.limit)];
+                        } else {
+                            // Primera carga: tomar los primeros 10 resultados
+                            newObject.results = allPokemons.slice(0, 10);
+                        }
+
+                        // Establecer el valor de next según si hay más resultados disponibles
+                        newObject.next = allPokemons.length > (prevResults?.results.length || 0) + 10;
+
+                        return newObject;
+                    });
                 }
 
             })

@@ -1,3 +1,4 @@
+import "../css/home.css"
 import { lazy, Suspense, useEffect, useState } from "react";
 import NavBar from "../components/NavBar"
 import { useParams } from "react-router-dom";
@@ -12,8 +13,8 @@ const ResultsProvider = lazy(() => import("../context/results").then(module => (
 export default function Home() {
 
     const [errorResults, setErrorResults] = useState(null)
-    const { query } = useParams();
-    const [urls, setUrls] = useState(["/mostrar-todos", `/buscar-pokemon/${query}]`])
+    const { query, typePokemon } = useParams();
+    const [urls, setUrls] = useState(["/mostrar-todos", `/buscar-pokemon/${query}`, `/filtrar-pokemon/${typePokemon}`])
     const [typeSearch, setTypeSearch] = useState(null);
     const { evaluateQuery } = useSearch({ setTypeSearch })
 
@@ -21,39 +22,39 @@ export default function Home() {
         setUrls(prevUrls => {
             const newUrls = [...prevUrls];
             newUrls[1] = `/buscar-pokemon/${query}`;
+            newUrls[2] = `/filtrar-pokemon/${typePokemon}`;
             return newUrls;
         });
 
         if (query) setErrorResults(evaluateQuery(query))
 
-    }, [query]);
+    }, [query, typePokemon]);
 
-    return (<main>
+    return (<main className="home-Home">
 
         {(location.pathname === "/") ?
             <NavBar />
             : null}
 
 
-        {(urls.some(url => url === location.pathname)) ?
-            <Suspense fallback={"Obteniendo Resultados..."}>
-                {(errorResults) ? <span>{errorResults}</span> : <ResultsProvider><Results typeSearch={typeSearch} query={query} /></ResultsProvider>}
-            </Suspense>
-            : null}
-
-        {(location.pathname === "/buscar-pokemon") ?
+        {(location.pathname === "/buscar-pokemon" || location.pathname === `/buscar-pokemon/${query}`) ?
             <Suspense>
                 <Search setTypeSearch={setTypeSearch} aprobarResultado={setErrorResults} />
             </Suspense>
             : null}
 
-        {errorResults && <span>{errorResults}</span>}
 
-        {(location.pathname === "/filtrar-pokemon") ?
-            <Suspense fallback="Cargando Tipos...">
+        {(location.pathname === "/filtrar-pokemon" || location.pathname === `/filtrar-pokemon/${typePokemon}`) ?
+            <Suspense fallback={<span className="main-h3-Results">Cargando Tipos...</span>}>
                 <ResultsProvider><AdvancedSearch /></ResultsProvider>
             </Suspense>
             : null}
 
+
+        {(urls.some(url => url === location.pathname)) ?
+            <Suspense fallback={<span className="main-h3-Results">Obteniendo Resultados...</span>}>
+                {(errorResults) ? <span className="span-error-Home">{errorResults}</span> : <ResultsProvider><Results typeSearch={typeSearch} query={query} typePokemon={typePokemon} /></ResultsProvider>}
+            </Suspense>
+            : null}
     </main>)
 }

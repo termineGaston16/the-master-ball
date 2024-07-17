@@ -1,0 +1,31 @@
+.home-Home{
+    width: 90%;
+    max-width: 1500px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.span-error-Home{
+
+    font-size: 1.3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 600;
+    font-style: italic;
+
+    color: white;
+    text-shadow: 0px 2px 10px red;
+}
+
+.main-h3-Results{
+    font-size: 1.3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 600;
+    font-style: italic;
+
+    color: white;
+    text-shadow: 0px 2px 10px white;
+}

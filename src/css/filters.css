@@ -1,0 +1,40 @@
+.fieldset-Filters {
+    top: 1rem;
+    position: sticky;
+    border: 1px solid white;
+
+    width: 90%;
+    max-width: 500px;
+    padding: 1rem;
+    border-radius: 0.7rem;
+}
+
+.fieldset-legend-Filters {
+    padding: 0px 1rem;
+
+    font-size: 1.4rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 500;
+
+}
+
+.fieldset-select-Filters, .fieldset-select-option-Filters {
+    width: 100%;
+    height: 30px;
+    max-width: 300px;
+
+    outline: none;
+    padding: 0px 10px;
+
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: rgb(55, 55, 55);
+
+
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+}
+
