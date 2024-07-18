@@ -22,7 +22,6 @@
 }
 
 .main-ul-Results {
-    max-width: 1500px;
     list-style: none;
 
     margin: 0px;
@@ -38,9 +37,20 @@
 }
 
 .main-ul-li-Results {
-    background: rgba(255, 255, 255, 0.672);
+    background: white;
+    box-shadow: 0px 0px 1rem white;
     color: rgb(195, 0, 255);
     border-radius: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.4rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    
 }
 
 .main-button-Results {
@@ -66,18 +76,8 @@
 @media (max-width: 660px) {
 
     .main-ul-Results {
-        list-style: none;
-
-        margin: 0px;
-        padding: 0px;
-        padding-bottom: 2rem;
-
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: repeat(auto-fit, minmax(170px, 170px));
-        grid-auto-rows: 50px;
-        justify-content: center;
-        align-content: center;
+        gap: 0.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
     }
 
 }

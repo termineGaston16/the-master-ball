@@ -1,7 +1,7 @@
 import "../css/results.css"
 import { useLocation } from "react-router-dom";
 import Filters from "./Filters"
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import useApi from "../js/fetch"
 import { ResultsContext } from "../context/results";
 
@@ -11,6 +11,18 @@ export default function Results(props) {
     const location = useLocation();
     const { callToApi, clearAll, increasePage } = useApi();
     const { results, error, loading, pages } = useContext(ResultsContext)
+    const [animation, setAnimation] = useState(false)
+
+    /* ANIMATION */
+    useEffect(() => {
+        setAnimation(true)
+
+        return () => {
+            setTimeout(() => {
+                setAnimation(false)
+            }, 1000);
+        }
+    }, [])
 
     /* INFINITY SCROLL */
     const handleScroll = useCallback(() => {
@@ -42,10 +54,9 @@ export default function Results(props) {
         return () => { clearAll() }
     }, [])
 
-
     /* SI NO SE ENCONTRARON RESULTADOS */
     if (results?.results.length <= 0) return (
-        <main className="main-Results">
+        <main className={`main-Results ${animation ? "fade-in" : "fade-out"}`}>
             <h3 className="main-h3-Results">Resultados no encontrados.</h3>
         </main>
     )
@@ -55,7 +66,7 @@ export default function Results(props) {
     if (results) return (<>
         <Filters />
 
-        <main className="main-Results">
+        <main className={`main-Results ${animation ? "fade-in" : "fade-out"}`}>
             <ul className="main-ul-Results">
                 {((results.results.map(pokemon => pokemon) || results.results || results) ?? []).map((pokemon, index) => (
                     <li className="main-ul-li-Results" key={index}>{pokemon.name || pokemon.pokemon.name}</li>

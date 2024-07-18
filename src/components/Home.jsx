@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import NavBar from "../components/NavBar"
 import { useParams } from "react-router-dom";
 import { useSearch } from "../hooks/useSearch";
+import ScrollToTopButton from "./ScrollToTopButton"
 
 const Results = lazy(() => import("./Results"))
 const Search = lazy(() => import("./Search"))
@@ -17,6 +18,18 @@ export default function Home() {
     const [urls, setUrls] = useState(["/mostrar-todos", `/buscar-pokemon/${query}`, `/filtrar-pokemon/${typePokemon}`])
     const [typeSearch, setTypeSearch] = useState(null);
     const { evaluateQuery } = useSearch({ setTypeSearch })
+    const [animation, setAnimation] = useState(false)
+
+    /* ANIMATION */
+    useEffect(() => {
+        setAnimation(true)
+
+        return () => {
+            setTimeout(() => {
+                setAnimation(false)
+            }, 1000);
+        }
+    }, [])
 
     useEffect(() => {
         setUrls(prevUrls => {
@@ -30,7 +43,7 @@ export default function Home() {
 
     }, [query, typePokemon]);
 
-    return (<main className="home-Home">
+    return (<main className={`home-Home ${animation ? "fade-in" : "fade-out"}`}>
 
         {(location.pathname === "/") ?
             <NavBar />
@@ -56,5 +69,7 @@ export default function Home() {
                 {(errorResults) ? <span className="span-error-Home">{errorResults}</span> : <ResultsProvider><Results typeSearch={typeSearch} query={query} typePokemon={typePokemon} /></ResultsProvider>}
             </Suspense>
             : null}
+
+        <ScrollToTopButton />
     </main>)
 }

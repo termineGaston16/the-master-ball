@@ -1,10 +1,25 @@
 import "../css/header.css"
 import { Link } from "react-router-dom";
 import logoPrincipal from "../img/logoPrincipal.png"
+import { useEffect, useState } from "react";
 
 
 export default function Header() {
-    return (<header className="header-Header">
+
+    const [animation, setAnimation] = useState(false)
+
+    /* ANIMATION */
+    useEffect(() => {
+        setAnimation(true)
+
+        return () => {
+            setTimeout(() => {
+                setAnimation(false)
+            }, 1000);
+        }
+    }, [])
+
+    return (<header className={`header-Header ${animation ? "fade-in" : "fade-out"}`}>
         <div className="header-div1-Header" style={{ display: "flex", gap: "2rem" }}>
             <a className="header-div1-link-Header" href="https://pokeapi.co/" target="_blank">API Utilizada</a>
             <span className="header-div1-span-Header">a proyect by <span className="span-copyright">KDA/NOVA</span> ©2024</span>

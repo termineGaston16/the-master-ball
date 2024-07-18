@@ -1,10 +1,11 @@
 import "../css/navbar.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ButtonNavHome } from "../elements/Buttons";
 
 export default function NavBar() {
     const [subtitle, setSubtitle] = useState("¿Qué deseas hacer?");
     const [opacity, setOpacity] = useState(1);
+    const [animation, setAnimation] = useState(false)
 
     const handleMouseEnter = (newSubtitle) => {
         setOpacity(0);
@@ -22,10 +23,21 @@ export default function NavBar() {
         }, 150); // Tiempo de la transición en milisegundos
     };
 
+    /* ANIMATION */
+    useEffect(() => {
+        setAnimation(true)
+
+        return () => {
+            setTimeout(() => {
+                setAnimation(false)
+            }, 1000);
+        }
+    }, [])
+
     return (
         <>
-            <h3 className="h3-NavBar" style={{ transition: "opacity 0.3s", opacity }}>{subtitle}</h3>
-            <nav className="nav-NavBar" style={{ display: "flex", gap: "2rem" }}>
+            <h3 className={`h3-NavBar ${animation ? "fade-in" : "fade-out"}`} style={{ transition: "opacity 0.3s", opacity }}>{subtitle}</h3>
+            <nav className={`nav-NavBar ${animation ? "fade-in" : "fade-out"}`} style={{ display: "flex", gap: "2rem" }}>
                 <ButtonNavHome
                     to="/mostrar-todos"
                     onMouseEnter={() => handleMouseEnter("Muestra todos los Pokemones de la base de datos.")}
